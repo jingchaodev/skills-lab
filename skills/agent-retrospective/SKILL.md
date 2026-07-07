@@ -111,6 +111,48 @@ Retrospective — <N sessions reviewed>
 • Pruned:   <skill/rule> — stale (<reason>)
 ```
 
+## Step 7: Keep the Skill Set Healthy
+
+Adding skills without curating them produces an overlapping, unfireable mess.
+Periodically (e.g. a weekly pass, not every run) step back from individual
+findings and tend the whole set.
+
+### Extract shared patterns
+
+When the same procedure shows up in multiple skills, that duplication is itself a
+finding — factor it out:
+
+- **Threshold:** the same pattern in **3+ skills** → extract it into its own skill.
+- **Granularity:** extract at the *capability* level ("how to search a codebase
+  effectively"), not the *step* level ("step 3 of workflow Y"). A good extracted
+  skill answers "how to do X well," reusable by any workflow that needs X.
+- **Reference, don't copy:** once extracted, parent skills *link* to it and delete
+  the duplicated content. Note the relationship in both directions (what this
+  skill references, and what references it) so the graph stays navigable.
+
+### Maintain a clean hierarchy
+
+Aim for three tiers, so skills compose instead of colliding:
+
+```
+Building-block skills   → how to use one tool/source/technique well
+Orchestrator skills     → when/why to combine building blocks for a goal
+Standalone skills       → self-contained domain or project workflows
+```
+
+(The oncall set in this repo is the worked example: building blocks like
+`ticket-triage` and `alarm-correlation`, composed by the `oncall-agent`
+orchestrator.)
+
+### Run periodic audits
+
+| Audit | Question | Action if it fails |
+|-------|----------|--------------------|
+| **Trigger** | Did this skill's triggers ever fire in recent sessions? | Never fired in weeks → its description/triggers are weak, or it's dead weight |
+| **Accuracy** | When a skill *was* used, did the agent follow it correctly? | Errors despite the skill → the instructions are unclear; add a gotcha |
+| **Coverage** | Which recurring workflows have *no* skill? | Repeated uncovered pattern → new-skill candidate |
+| **Duplication** | Do any two skills overlap >~30%? | Merge, or extract the shared part per above |
+
 ## Tips
 
 - **Explicit corrections are gold** — mine "no / actually / I said" first; they're unambiguous and high-value.
@@ -120,3 +162,4 @@ Retrospective — <N sessions reviewed>
 - **A wrong lesson is worse than no lesson.** When unsure, capture it as a narrow note, not a broad directive.
 - **Pruning counts.** Deleting a stale rule or merging duplicate skills makes the agent better, not just adding new ones.
 - **Write directives to be testable.** "Prefer X over Y because Z" beats "be more careful."
+- **Duplication is a finding too.** The same procedure in three skills isn't three skills — it's one building block waiting to be extracted and referenced.
