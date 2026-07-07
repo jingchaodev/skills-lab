@@ -41,9 +41,18 @@ nothing you can't run on a laptop.
 | [`aws-cli-safety`](skills/aws-cli-safety) | Safe, effective AWS CLI use — read-before-write, least privilege, prod caution, `--dry-run`, `--query`/`jq`, pagination. |
 | [`change-management`](skills/change-management) | Author and run production change records: what/why/blast-radius/rollback/verification, risk tiers, approval flow. |
 | [`operational-readiness-review`](skills/operational-readiness-review) | Run or prepare for a launch-readiness review: monitoring, runbooks, on-call, capacity, rollback, durability, load testing. |
-| [`incident-notes`](skills/incident-notes) | Structured on-call notes in plain Markdown: timestamped log, incident table, toil tracking, clean handoffs. |
-| [`postmortem`](skills/postmortem) | Write and facilitate a blameless postmortem — timeline, impact, root cause, and concrete preventive action items. |
 | [`security-review-gate`](skills/security-review-gate) | Pause on security-sensitive requests (secrets, PII, auth, IAM), consult the standard before acting, never emit insecure code. |
+
+**Oncall & incident response**
+| Skill | What it does |
+|-------|--------------|
+| [`oncall-context-system`](skills/oncall-context-system) | A file-based shift-memory system so oncall context never evaporates — ticket ledger, deadline calendar, working-on tracker, gaps log, daily logs, and handoff lifecycle. |
+| [`ticket-triage`](skills/ticket-triage) | Categorize, prioritize, and destale a ticket queue; investigate 3+ tickets in parallel with read-only sub-agents, then reconcile in one pass. |
+| [`alarm-correlation`](skills/alarm-correlation) | Cluster related alarms, assess systemic-vs-transient severity, and trace cross-service dependency chains to a root cause. |
+| [`incident-response`](skills/incident-response) | Handle a live sev1/sev2 — impact quantification, primary/secondary linking, the resolution-summary gate, and outage comms. |
+| [`runbook-authoring`](skills/runbook-authoring) | Write agent-consumable service runbooks: alarm-definition blocks, ranked-likelihood investigation tables, quality tiers, and agent-routing metadata. |
+| [`postmortem`](skills/postmortem) | Write and facilitate a blameless postmortem — timeline, impact, root cause, and concrete preventive action items. |
+| [`evidence-discipline`](skills/evidence-discipline) | Ground every operational claim in a traceable source, label its evidence tier, and never present correlation as causation. |
 
 **Writing & communication**
 | Skill | What it does |
