@@ -59,6 +59,7 @@ nothing you can't run on a laptop.
 | [`socratic-questioning`](skills/socratic-questioning) | Ask focused questions to reach shared understanding before acting — with a grill-vs-act decision model. |
 | [`engineering-judgment`](skills/engineering-judgment) | Operate at senior/staff/principal level: scope, ambiguity, influence without authority, and when "good enough" wins. |
 | [`behavioral-interview`](skills/behavioral-interview) | Run or prepare for competency/behavioral interviews — STAR, competency areas, probing for real signal, level calibration. |
+| [`technical-interview`](skills/technical-interview) | Run or prepare for coding and system-design interviews — round types, calibration rubric, interviewer prep doc, debrief writing, candidate coaching. |
 | [`asciicast-recorder`](skills/asciicast-recorder) | Record polished terminal demos via asciinema + tmux, with idle-time compression and post-hoc trimming. |
 | [`agent-retrospective`](skills/agent-retrospective) | An agent analyzing its own session transcripts to find friction and missed corrections, then proposing durable improvements. |
 
