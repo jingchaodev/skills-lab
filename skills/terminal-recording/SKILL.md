@@ -1,9 +1,9 @@
 ---
-name: asciicast-recorder
+name: terminal-recording
 description: Record terminal demos as asciicasts. Use when the user wants to record a demo, capture a terminal session, create an asciicast, or produce a terminal recording. Manages recording via tmux so the main agent stays unblocked.
 ---
 
-# asciicast-recorder
+# terminal-recording
 
 Record polished terminal demos as asciicast files using asciinema + tmux.
 

@@ -66,7 +66,7 @@ The skills here deliberately:
   no lockfile, no supply chain. `search.js` and `fetch.js` are single files that
   use only the standard library.
 - **Parameterize environment** instead of hard-coding paths (e.g.
-  `INCIDENT_NOTES_DIR` in `incident-notes`).
+  `INCIDENT_NOTES_DIR` in `oncall-context-system`).
 
 If your skill wraps a proprietary system, split it: keep the *reusable pattern*
 (how to triage a failure, how to structure a review) generic, and isolate the
@@ -78,7 +78,7 @@ Add a script only when the task genuinely needs execution the agent can't do
 inline:
 
 - **Pure Markdown** is right for workflows, playbooks, and orchestration of
-  tools the agent already has (`git-pr-workflow`, `ci-cd-triage`).
+  tools the agent already has (`git-workflow`, `ci-cd-triage`).
 - **A script** is right when you need deterministic parsing or a capability the
   agent lacks (`web-search` parses DuckDuckGo's HTML; `web-fetch` extracts
   readable text). Keep it dependency-free and give it a `--help` and a

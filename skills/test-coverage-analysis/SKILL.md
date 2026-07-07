@@ -1,5 +1,5 @@
 ---
-name: coverage-and-test-reports
+name: test-coverage-analysis
 description: Read and act on test-coverage reports and CI test-run results — interpret line/branch and new-code coverage, understand coverage gates/regressions, root-cause a failed CI run, and prioritize which gaps actually matter by risk. Use when given a coverage report or CI test-run URL, when a coverage gate fails, when tests are red in CI, or when asked "what should I test" / "why did this run fail".
 ---
 

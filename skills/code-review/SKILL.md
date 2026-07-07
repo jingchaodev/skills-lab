@@ -1,5 +1,5 @@
 ---
-name: pr-review-workflow
+name: code-review
 description: Structured code-review workflow for GitHub pull requests. Use when the user asks to review a PR, review changes, give code-review feedback, or check a diff before merge. Fetches the diff, reviews against a rubric, and posts actionable inline comments.
 ---
 

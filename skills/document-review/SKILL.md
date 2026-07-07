@@ -1,5 +1,5 @@
 ---
-name: doc-review-comments
+name: document-review
 description: Review and comment on someone else's document or prose (not code) — design docs, proposals, specs, narratives, PR/FAQs. Use when the user asks to review a doc, give feedback on writing, comment on a draft, or do a pre-ship review pass on a document. Produces structured, severity-labeled feedback that improves the doc without rewriting the author's voice.
 ---
 

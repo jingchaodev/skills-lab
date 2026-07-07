@@ -1,5 +1,5 @@
 ---
-name: git-pr-workflow
+name: git-workflow
 description: Git and GitHub pull-request workflow. Branching, conventional commits, rebasing, conflict resolution, and creating/updating PRs with the gh CLI. Use when the user asks about git strategy, branch management, rebasing, conflict resolution, or opening a pull request.
 ---
 

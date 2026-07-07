@@ -1,5 +1,5 @@
 ---
-name: architecture-diagram
+name: diagrams-as-code
 description: Produce clean, editorial-quality architecture and flow diagrams as code or SVG — pick the right tool (Mermaid, Graphviz/DOT, PlantUML, or hand-authored SVG), the right pattern, and enforce layout/quality rules. Use when asked to draw a diagram, visualize a system/architecture, make a flowchart, or turn a design into a picture.
 ---
 

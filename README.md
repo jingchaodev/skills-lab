@@ -27,11 +27,11 @@ nothing you can't run on a laptop.
 **Code, review & delivery**
 | Skill | What it does |
 |-------|--------------|
-| [`git-pr-workflow`](skills/git-pr-workflow) | Feature-branch git flow, conventional commits, rebasing, conflict resolution, and PRs via the `gh` CLI. |
-| [`pr-review-workflow`](skills/pr-review-workflow) | Understand intent → review against an 8-lens rubric → post actionable, severity-labeled inline comments. |
+| [`git-workflow`](skills/git-workflow) | Feature-branch git flow, conventional commits, rebasing, conflict resolution, and PRs via the `gh` CLI. |
+| [`code-review`](skills/code-review) | Understand intent → review against an 8-lens rubric → post actionable, severity-labeled inline comments. |
 | [`design-review`](skills/design-review) | Review a technical design (or defend your own) against a rubric: problem, alternatives, failure modes, operability, cost. |
 | [`call-chain-tracing`](skills/call-chain-tracing) | Trace a request/value hop-by-hop across services and code to find where it's transformed, filtered, or dropped. |
-| [`coverage-and-test-reports`](skills/coverage-and-test-reports) | Interpret coverage metrics and CI test-run failures; prioritize the gaps that actually matter (risk-based, not 100%-chasing). |
+| [`test-coverage-analysis`](skills/test-coverage-analysis) | Interpret coverage metrics and CI test-run failures; prioritize the gaps that actually matter (risk-based, not 100%-chasing). |
 | [`ci-cd-triage`](skills/ci-cd-triage) | Diagnose red pipelines — classify the failing stage, read logs first-error-first, triage build/test/deploy/infra failures. |
 
 **Operations & infrastructure**
@@ -43,9 +43,10 @@ nothing you can't run on a laptop.
 | [`operational-readiness-review`](skills/operational-readiness-review) | Run or prepare for a launch-readiness review: monitoring, runbooks, on-call, capacity, rollback, durability, load testing. |
 | [`security-review-gate`](skills/security-review-gate) | Pause on security-sensitive requests (secrets, PII, auth, IAM), consult the standard before acting, never emit insecure code. |
 
-**Oncall & incident response**
+**Oncall & incident response** — a coordinated set; [`oncall-agent`](skills/oncall-agent) is the orchestrator that composes the rest into one on-call assistant (see [Composing skills into an agent](#composing-skills-into-an-agent)).
 | Skill | What it does |
 |-------|--------------|
+| [`oncall-agent`](skills/oncall-agent) | **Orchestrator** — routes each situation (shift start, triage, alarm, live incident, handoff) to the right specialist skill below, coordinating them through shared context files. |
 | [`oncall-context-system`](skills/oncall-context-system) | A file-based shift-memory system so oncall context never evaporates — ticket ledger, deadline calendar, working-on tracker, gaps log, daily logs, and handoff lifecycle. |
 | [`ticket-triage`](skills/ticket-triage) | Categorize, prioritize, and destale a ticket queue; investigate 3+ tickets in parallel with read-only sub-agents, then reconcile in one pass. |
 | [`alarm-correlation`](skills/alarm-correlation) | Cluster related alarms, assess systemic-vs-transient severity, and trace cross-service dependency chains to a root cause. |
@@ -58,9 +59,9 @@ nothing you can't run on a laptop.
 | Skill | What it does |
 |-------|--------------|
 | [`technical-writing`](skills/technical-writing) | Write clear long-form docs (design docs, proposals, narratives) — structure, lead with the point, data over adjectives, self-review pass. |
-| [`doc-review-comments`](skills/doc-review-comments) | Review someone else's prose: does it answer its question, is the structure sound, what's missing — with severity-labeled comments. |
-| [`writing-style-capture`](skills/writing-style-capture) | Extract and reproduce a person's or brand's writing voice from samples, via a reusable style card. |
-| [`architecture-diagram`](skills/architecture-diagram) | Generate clean architecture diagrams as code (Mermaid / Graphviz / PlantUML / SVG) — with a tool decision table. |
+| [`document-review`](skills/document-review) | Review someone else's prose: does it answer its question, is the structure sound, what's missing — with severity-labeled comments. |
+| [`writing-style-transfer`](skills/writing-style-transfer) | Extract and reproduce a person's or brand's writing voice from samples, via a reusable style card. |
+| [`diagrams-as-code`](skills/diagrams-as-code) | Generate clean architecture diagrams as code (Mermaid / Graphviz / PlantUML / SVG) — with a tool decision table. |
 
 **Thinking, judgment & meta**
 | Skill | What it does |
@@ -69,8 +70,35 @@ nothing you can't run on a laptop.
 | [`engineering-judgment`](skills/engineering-judgment) | Operate at senior/staff/principal level: scope, ambiguity, influence without authority, and when "good enough" wins. |
 | [`behavioral-interview`](skills/behavioral-interview) | Run or prepare for competency/behavioral interviews — STAR, competency areas, probing for real signal, level calibration. |
 | [`technical-interview`](skills/technical-interview) | Run or prepare for coding and system-design interviews — round types, calibration rubric, interviewer prep doc, debrief writing, candidate coaching. |
-| [`asciicast-recorder`](skills/asciicast-recorder) | Record polished terminal demos via asciinema + tmux, with idle-time compression and post-hoc trimming. |
+| [`terminal-recording`](skills/terminal-recording) | Record polished terminal demos via asciinema + tmux, with idle-time compression and post-hoc trimming. |
 | [`agent-retrospective`](skills/agent-retrospective) | An agent analyzing its own session transcripts to find friction and missed corrections, then proposing durable improvements. |
+
+## Composing skills into an agent
+
+Skills aren't only standalone — several here are designed to **compose into a
+single agent**. The oncall set is the worked example: seven specialist skills
+(`oncall-context-system`, `ticket-triage`, `alarm-correlation`,
+`incident-response`, `runbook-authoring`, `postmortem`, `evidence-discipline`)
+that share one set of context files, coordinated by an **orchestrator**
+([`oncall-agent`](skills/oncall-agent)).
+
+The pattern generalizes to any multi-skill agent:
+
+1. **Specialists do one thing well.** Each skill is independently useful and
+   independently testable.
+2. **An orchestrator skill routes** situations to specialists (a *situation →
+   skill* table) and documents the phase order for an end-to-end flow.
+3. **Shared state is a contract.** The orchestrator defines who owns the shared
+   files — e.g. *one writer* (only the main agent writes the ledger; parallel
+   sub-agents are read-only), *journal ≠ source of truth*, and cross-cutting
+   rules like evidence discipline that every specialist obeys.
+4. **The orchestrator's `description` names the whole domain**, so the agent
+   loads it as the entry point and pulls in specialists on demand.
+
+Install the whole set together and load the orchestrator first — see
+[`oncall-agent`](skills/oncall-agent) for the routing table, the shift lifecycle,
+and how to point the specialists at your ticketing / monitoring / CI-CD / chat
+stack.
 
 ## Installing
 
@@ -98,11 +126,11 @@ frontmatter and invokes the skill when the `description` matches the task.
 Most skills are pure Markdown and shell. The ones with extra needs:
 
 - **`web-search` / `web-fetch`** — Node.js 18+ (built-in global `fetch`; no `npm install`).
-- **`asciicast-recorder`** — `asciinema`, `tmux`, `python3`, optionally `agg` for GIF export.
+- **`terminal-recording`** — `asciinema`, `tmux`, `python3`, optionally `agg` for GIF export.
 - **`tmux-runner`** — `tmux`.
-- **`git-pr-workflow` / `pr-review-workflow`** — `git` and the [`gh`](https://cli.github.com/) CLI.
+- **`git-workflow` / `code-review`** — `git` and the [`gh`](https://cli.github.com/) CLI.
 - **`aws-cli-safety`** — the AWS CLI.
-- **`architecture-diagram`** — any of Mermaid, Graphviz, or PlantUML (your choice).
+- **`diagrams-as-code`** — any of Mermaid, Graphviz, or PlantUML (your choice).
 
 ## Anatomy of a skill
 

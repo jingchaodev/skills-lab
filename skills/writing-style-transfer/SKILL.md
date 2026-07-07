@@ -1,5 +1,5 @@
 ---
-name: writing-style-capture
+name: writing-style-transfer
 description: Extract a specific person's or brand's writing voice from samples and reproduce it when drafting. Use when the user asks to "write this in my voice," "match my style," "sound like our brand," draft an email/post the way someone usually writes, or build a reusable style guide from example messages.
 ---
 
