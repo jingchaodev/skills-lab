@@ -14,21 +14,27 @@ planning
 No active task.
 
 ## Current status
-Workspace just initialized. No checkpoint recorded yet.
+Adopted agentws. REQUIREMENTS.md (mined 2026-07-08) sets product direction: 'authoring + lint + eval + fixtures', not more SKILL.md files. pytest green (3 tests).
 
 ## Last known good state
-unknown
+branch `main`, last test: passed
 
 ## Recent changes
-- Workspace initialized.
+Tracked edits (this task):
+- No tracked edits recorded.
+Untracked (new/scratch):
+- tests/__pycache__/test_skill_lint.cpython-312-pytest-9.0.2.pyc
 
 ## Next best action
-Run `agentws checkpoint` after making progress.
+Implement K1 'skill-lint / skill doctor': check dir name, SKILL.md casing, frontmatter schema, discoverability path (top-level-only scan), slash-name collisions — the 'installed but invisible, no error' black box is the #1 complaint. Then K2 token-budget lint.
+
+## Pinned files
+- REQUIREMENTS.md — mined Ship-next backlog (K1, K2..)
 
 ## Blockers / open questions
 - none
 
 ## Verification
-- Last test command: unknown
-- Last test result: unknown
+- Last test command: python3 -m pytest tests/ -q
+- Last test result: passed
 <!-- agentws:generated:end -->
