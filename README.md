@@ -62,6 +62,7 @@ nothing you can't run on a laptop.
 | [`document-review`](skills/document-review) | Review someone else's prose: does it answer its question, is the structure sound, what's missing — with severity-labeled comments. |
 | [`writing-style-transfer`](skills/writing-style-transfer) | Extract and reproduce a person's or brand's writing voice from samples, via a reusable style card. |
 | [`diagrams-as-code`](skills/diagrams-as-code) | Generate clean architecture diagrams as code (Mermaid / Graphviz / PlantUML / SVG) — with a tool decision table. |
+| [`html-notes`](skills/html-notes) | Produce polished, self-contained HTML reading layers for specs, reports, research notes, diagrams, and long-form wiki notes. |
 
 **Thinking, judgment & meta**
 | Skill | What it does |
