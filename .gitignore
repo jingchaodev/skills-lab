@@ -13,3 +13,7 @@ npm-debug.log*
 scratch/
 *.cast
 *.log
+
+__pycache__/
+*.pyc
+.pytest_cache/
