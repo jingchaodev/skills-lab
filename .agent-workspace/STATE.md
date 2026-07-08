@@ -23,10 +23,10 @@ branch `main`, last test: passed
 Tracked edits (this task):
 - No tracked edits recorded.
 Untracked (new/scratch):
-- tests/__pycache__/test_skill_lint.cpython-312-pytest-9.0.2.pyc
+- none
 
 ## Next best action
-Implement K1 'skill-lint / skill doctor': check dir name, SKILL.md casing, frontmatter schema, discoverability path (top-level-only scan), slash-name collisions — the 'installed but invisible, no error' black box is the #1 complaint. Then K2 token-budget lint.
+Implement K1 'skill-lint / skill doctor': dir name, SKILL.md casing, frontmatter schema, discoverability path (top-level-only scan), slash-name collisions — the 'installed but invisible, no error' black box is the #1 complaint. Then K2 token-budget lint.
 
 ## Pinned files
 - REQUIREMENTS.md — mined Ship-next backlog (K1, K2..)

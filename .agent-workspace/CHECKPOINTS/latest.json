@@ -1,22 +1,18 @@
 {
   "version": 1,
-  "ts": "2026-07-08T21:41:20Z",
+  "ts": "2026-07-08T21:42:56Z",
   "agent": "unknown",
   "branch": "main",
-  "status_short": "?? tests/__pycache__/test_skill_lint.cpython-312-pytest-9.0.2.pyc",
+  "status_short": "",
   "diff_stat": "",
-  "changed_files": [
-    "tests/__pycache__/test_skill_lint.cpython-312-pytest-9.0.2.pyc"
-  ],
+  "changed_files": [],
   "changed": {
     "tracked": [],
-    "untracked": [
-      "tests/__pycache__/test_skill_lint.cpython-312-pytest-9.0.2.pyc"
-    ],
+    "untracked": [],
     "untracked_truncated": 0
   },
   "summary": "Adopted agentws. REQUIREMENTS.md (mined 2026-07-08) sets product direction: 'authoring + lint + eval + fixtures', not more SKILL.md files. pytest green (3 tests).",
-  "next_action": "Implement K1 'skill-lint / skill doctor': check dir name, SKILL.md casing, frontmatter schema, discoverability path (top-level-only scan), slash-name collisions — the 'installed but invisible, no error' black box is the #1 complaint. Then K2 token-budget lint.",
+  "next_action": "Implement K1 'skill-lint / skill doctor': dir name, SKILL.md casing, frontmatter schema, discoverability path (top-level-only scan), slash-name collisions — the 'installed but invisible, no error' black box is the #1 complaint. Then K2 token-budget lint.",
   "blockers": [],
   "pins": [
     "REQUIREMENTS.md — mined Ship-next backlog (K1, K2..)"
