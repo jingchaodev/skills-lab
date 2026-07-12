@@ -19,6 +19,7 @@ nothing you can't run on a laptop.
 | Skill | What it does |
 |-------|--------------|
 | [`deep-research`](skills/deep-research) | Decompose a question, fan out searches across web/code/docs, read the best sources, refine on gaps, and synthesize a cited answer. |
+| [`researching-ai-startups`](skills/researching-ai-startups) | Research an AI startup category or one company: explain the product, identify founders, collect interviews and transcripts, separate claims from evidence, and organize reusable company notes. |
 | [`fact-check`](skills/fact-check) | Verify a claim against multiple independent sources and return a structured verdict with confidence and citations. |
 | [`search-strategy`](skills/search-strategy) | Search any corpus effectively — pick the right source, craft precise queries, iterate, filter, and switch keyword↔semantic. |
 | [`web-search`](skills/web-search) | DuckDuckGo search from the terminal — zero-dependency Node script, text or JSON output. |
