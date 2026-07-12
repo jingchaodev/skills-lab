@@ -1,0 +1,17 @@
+[
+  {
+    "id": "invalid-source",
+    "title": "Invalid Source",
+    "speakers": ["Speaker"],
+    "publisher": "Publisher",
+    "published_at": "2026-01-15",
+    "media_type": "video",
+    "transcript": {
+      "status": "available",
+      "provenance": "unknown-source",
+      "language": "en",
+      "word_count": -1,
+      "local_path": "/root/private/transcript.txt"
+    }
+  }
+]

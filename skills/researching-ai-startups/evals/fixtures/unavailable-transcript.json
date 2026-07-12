@@ -1,0 +1,15 @@
+{
+  "id": "publisher-2026-no-transcript",
+  "title": "Interview Without a Transcript",
+  "speakers": ["Founder Name"],
+  "publisher": "Publisher Name",
+  "published_at": "2026-02-20",
+  "url": "https://example.com/no-transcript",
+  "media_type": "podcast",
+  "transcript": {
+    "status": "unavailable",
+    "provenance": "unavailable",
+    "language": "en",
+    "word_count": 0
+  }
+}
