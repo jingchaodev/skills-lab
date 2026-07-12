@@ -2,7 +2,7 @@
 
 **Date:** 2026-07-12
 **Status:** Approved concept; implementation pending
-**Target repository:** `jingchaodev/skills-lab`
+**Target repository:** a public portable Agent Skills repository
 **Proposed skill name:** `researching-ai-startups`
 
 ## 1. Purpose
@@ -341,7 +341,7 @@ Before publication:
 
 1. scan for private names, internal repositories, local paths, private IPs, chat IDs, tokens, credentials, and project-specific note systems;
 2. replace local paths with placeholders such as `<workspace>` and `<output-dir>`;
-3. ensure examples work without MemoryKit, Tailscale, Telegram, or a specific HTML renderer;
+3. ensure examples work without any private note system, private network, messaging platform, or specific HTML renderer;
 4. avoid publishing copyrighted transcript content;
 5. run the repository’s skill lint and tests;
 6. test installation through the documented `skills/` symlink flow;

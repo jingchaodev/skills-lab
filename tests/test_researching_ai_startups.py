@@ -1,6 +1,7 @@
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -85,11 +86,7 @@ class ResearchingAIStartupsTests(unittest.TestCase):
             "100.108.",
             "jingchao",
         ]
-        roots = [SKILL / "SKILL.md", SKILL / "references", SKILL / "templates", SKILL / "scripts"]
-        files = [roots[0]]
-        for directory in roots[1:]:
-            if directory.exists():
-                files.extend(path for path in directory.rglob("*") if path.is_file())
+        files = [path for path in SKILL.rglob("*") if path.is_file()]
         hits = []
         for path in files:
             if not path.exists():
@@ -123,6 +120,19 @@ class ResearchingAIStartupsTests(unittest.TestCase):
             stderr=subprocess.PIPE,
         )
 
+    def run_payload(self, payload):
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", encoding="utf-8") as handle:
+            json.dump(payload, handle)
+            handle.flush()
+            validator = SKILL / "scripts" / "validate_sources.py"
+            return subprocess.run(
+                [sys.executable, str(validator), handle.name, "--json"],
+                cwd=ROOT,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+
     def test_validator_accepts_valid_metadata(self):
         result = self.run_validator("valid-sources.json", "--json")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -154,6 +164,51 @@ class ResearchingAIStartupsTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0)
         self.assertIn("source metadata", result.stdout.lower())
+
+    def test_validator_rejects_empty_collection(self):
+        result = self.run_payload([])
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("at least one source", json.loads(result.stdout)["errors"][0])
+
+    def test_validator_rejects_empty_values_bad_date_and_missing_language(self):
+        payload = {
+            "id": "",
+            "title": "",
+            "speakers": ["Founder"],
+            "publisher": "",
+            "published_at": "yesterday",
+            "url": "https://example.com/interview",
+            "media_type": "",
+            "transcript": {"status": "available", "provenance": "official", "word_count": 10},
+        }
+        result = self.run_payload(payload)
+        self.assertEqual(result.returncode, 1)
+        errors = json.loads(result.stdout)["errors"]
+        for field in ["id", "title", "publisher", "published_at", "media_type", "language"]:
+            self.assertTrue(any(field in error for error in errors), field)
+
+    def test_validator_rejects_private_url_and_nested_private_value(self):
+        payload = {
+            "id": "source",
+            "title": "Interview",
+            "speakers": ["Founder"],
+            "publisher": "Publisher",
+            "published_at": "2026-01-15",
+            "url": "http://192.168.1.20/interview",
+            "media_type": "video",
+            "notes": [{"path": "/home/alice/private/notes.md"}],
+            "transcript": {
+                "status": "unavailable",
+                "provenance": "unavailable",
+                "language": "en",
+                "word_count": 0,
+            },
+        }
+        result = self.run_payload(payload)
+        self.assertEqual(result.returncode, 1)
+        errors = json.loads(result.stdout)["errors"]
+        self.assertTrue(any("url" in error and "private" in error for error in errors))
+        self.assertTrue(any("notes[0].path" in error for error in errors))
 
 
 if __name__ == "__main__":

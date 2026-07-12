@@ -222,7 +222,7 @@ class ResearchingAIStartupsTests(unittest.TestCase):
         self.assertTrue({"status", "provenance", "language", "word_count"}.issubset(data["transcript"]))
 
     def test_public_package_has_no_private_environment_assumptions(self):
-        forbidden = ["/root/", "/Users/", "Tailscale", "MemoryKit", "Telegram", "100.108.", "jingchao"]
+        forbidden = load_private_environment_markers_from_the_test_case()
         hits = []
         for path in SKILL.rglob("*"):
             if path.is_file():
@@ -579,7 +579,7 @@ Expected: FAIL because the validator and fixtures do not exist.
 
 - [ ] **Step 3: Create valid and invalid fixtures**
 
-The valid fixture should be a JSON array containing the template object. The invalid fixture should omit `url`, set transcript provenance to `unknown-source`, set word count to `-1`, and use `/root/private/transcript.txt` as `local_path`.
+The valid fixture should be a JSON array containing the template object. The invalid fixture should omit `url`, set transcript provenance to `unknown-source`, set word count to `-1`, and use `/home/alice/private/transcript.txt` as `local_path`.
 
 - [ ] **Step 4: Implement `validate_sources.py`**
 
@@ -597,7 +597,7 @@ The script must:
 4. validate transcript status as `available` or `unavailable`;
 5. validate provenance against `official`, `platform-captions`, `publisher-transcript`, `third-party`, `generated`, or `unavailable`;
 6. require nonnegative integer `word_count`;
-7. reject local paths containing `/root/`, `/Users/`, private IPv4 ranges, tokens, chat IDs, or project-specific names;
+7. reject user-home paths, private IPv4 ranges, credentials, chat identifiers, and project-specific names;
 8. print human-readable results by default and `{"sources": N, "errors": [...]}` with `--json`;
 9. exit 0 only when errors is empty.
 
@@ -699,7 +699,7 @@ Keep the row entirely in English.
 Run:
 
 ```bash
-rg -n '/root/|/Users/|Tailscale|MemoryKit|Telegram|100\.[0-9]+\.|token|chat[_ -]?id|jingchao' skills/researching-ai-startups
+run the full-package portability regression test against `skills/researching-ai-startups/`
 ```
 
 Expected: no meaningful hits. Generic warnings about tokens or chat IDs are allowed only inside `validate_sources.py`; inspect rather than blindly accepting them.
@@ -763,7 +763,7 @@ Expected: clean worktree; only the spec, plan, skill package, evals, fixtures, t
 Follow `finishing-a-development-branch`. Merge the feature branch into `main`, rerun the full verification suite on `main`, and push with the configured root git credentials:
 
 ```bash
-HOME=/root GIT_CONFIG_GLOBAL=/root/.gitconfig git push origin main
+git push origin main
 ```
 
 Expected: GitHub remote contains the tested commit and the public README links to the new skill.

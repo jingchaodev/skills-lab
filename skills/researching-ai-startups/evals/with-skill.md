@@ -5,8 +5,9 @@
 - Date: 2026-07-12
 - Runner: independent `hermes --oneshot` processes
 - Skill loaded from: `skills/researching-ai-startups/SKILL.md`
-- Live web research: disabled; these runs tested routing, output design, evidence rules, transcript rules, and completion criteria
-- Scenarios run: S2 and S4
+- Execution-design runs: S2 and S4
+- Live web research runs: S1 and S3
+- Complete live outputs: `runs/s1-green.md` and `runs/s3-green.md`
 
 ## S4 — Company selection
 
@@ -67,6 +68,30 @@ A failing static regression assertion was added first. `SKILL.md` then received 
 
 The fresh retry selected **Single-company research**, left Fireworks-specific facts unknown pending source review, and proposed the relative placeholder `<fireworks-ai>/`. It explicitly stated that no private path should be inferred. The portability regression passed.
 
-## Remaining behavioral coverage
+## S1 and S3 — Live web research
 
-S1 and S3 were not rerun through live web research in this cycle. The earlier Sierra project supplies a real rich-company baseline, while static contract tests cover package structure and source handling. A future eval with working web-capable workers should add full end-to-end outputs for Sierra, Fireworks AI, and Decagon rather than treating this execution-design test as research-quality validation.
+The same no-skill and with-skill prompts were run through independent agents with live search/browser access. Complete outputs are preserved under `evals/runs/`.
+
+### S1 — Sierra result
+
+The skill-guided run used explicit `Direct`, `Attributed`, and `Unknown` labels. It treated customer metrics as vendor-published rather than audited, preserved the missing founder-responsibility split, and marked both interview transcripts `unavailable/undetermined` when platform captions could not be verified. It also separated job-listing signals from proof of architecture or future headcount.
+
+### S3 — Decagon result
+
+The skill-guided run separated the company’s resolution metric from independent validation, used an external job description only as evidence of current engineering demand, and preserved unknown product boundaries. It found a canonical No Priors episode URL where the baseline returned a search-results URL. It labeled one transcript path as unverified platform captions and one as a discovered publisher transcript whose contents had not been reviewed.
+
+### Same-prompt comparison
+
+| Dimension | RED | GREEN |
+|---|---|---|
+| Evidence vocabulary | Informal and inconsistent | Direct/Attributed/Independent/Unverified/Unknown |
+| Canonical interview URL | One S3 search-results URL | Canonical episode URLs |
+| Transcript handling | Availability described informally | Provenance plus retrieval limitation |
+| Customer metrics | Caveated | Explicitly attributed and not treated as audited |
+| Culture | Company-authored caveat | Company-authored caveat plus missing lived-experience evidence |
+| Unknowns | Present | Present and tied to next evidence needed |
+| Employment verdict | None | None |
+
+## Remaining limitation
+
+S2 has an execution-design GREEN run and portability regression but no same-prompt live RED/GREEN web pair because the original delegated runner failed. The package does not claim otherwise.

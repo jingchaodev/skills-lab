@@ -5,14 +5,28 @@
 - Date: 2026-07-12
 - Model requested: GPT-5.6-sol
 - Skill available: no
-- Fresh-agent attempts: five workers across two batches
-- Result: all five workers timed out before producing any tokens
+- Fresh-agent attempts: five delegated workers initially timed out before producing tokens
+- Fallback runner: independent `hermes --oneshot` processes with live search/browser tools
+- Completed live RED scenarios: S1 (Sierra) and S3 (Decagon)
+- Complete outputs: `runs/s1-red.md` and `runs/s3-red.md`
 
 ## Live baseline limitation
 
 The first batch asked two workers to research two scenarios each with web access. Both workers timed out after three 90-second attempts and returned no content. The second batch split S1, S2, and S3 into separate no-tool tasks. All three workers timed out before producing any tokens.
 
 These transport failures are not counted as behavioral failures. No synthetic model output is substituted for missing results.
+
+## Live RED runs
+
+After the delegated transport failed, the same scenarios were executed through independent one-shot agents with live search/browser access and without loading the skill.
+
+### S1 — Sierra
+
+The baseline produced a useful sourced employer brief and explicit unknowns. It distinguished company-authored technical evidence from independent verification, but used an informal evidence vocabulary and reported transcript availability without the structured provenance contract used by the skill.
+
+### S3 — Decagon
+
+The baseline correctly warned that customer metrics and culture language were company-controlled. One interview entry linked to a YouTube search-results page instead of a verified canonical episode URL, and transcript availability was described informally. This is a concrete metadata-quality failure that the skill should prevent.
 
 ## Prior observed baseline: Sierra research series
 
@@ -54,4 +68,4 @@ The Sierra research series was completed before `researching-ai-startups` existe
 
 ## Remaining behavioral baseline gap
 
-The sparse-company, marketing-heavy-company, and company-selection scenarios did not produce live outputs because of the documented subagent transport failure. They must be rerun during GREEN evaluation when the transport is available. Static tests cover the package contract in the meantime, but they do not replace those behavioral scenarios.
+S2 did not receive a live no-skill web baseline because the original delegated runner failed. S1 and S3 now have complete same-prompt RED/GREEN web outputs, and S4 has a mode-routing evaluation. This limitation remains explicit rather than being replaced with synthetic output.

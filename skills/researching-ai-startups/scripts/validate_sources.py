@@ -21,6 +21,7 @@ REQUIRED_FIELDS = {
     "media_type",
     "transcript",
 }
+NONEMPTY_STRING_FIELDS = {"id", "title", "publisher", "published_at", "media_type"}
 TRANSCRIPT_STATUSES = {"available", "unavailable"}
 TRANSCRIPT_PROVENANCE = {
     "official",
@@ -55,22 +56,45 @@ def is_http_url(value: object) -> bool:
     return parsed.scheme in {"http", "https"} and bool(parsed.netloc)
 
 
+def url_uses_private_host(value: object) -> bool:
+    if not isinstance(value, str):
+        return False
+    host = urlparse(value).hostname
+    if not host:
+        return False
+    if host.lower() == "localhost":
+        return True
+    try:
+        return not ipaddress.ip_address(host).is_global
+    except ValueError:
+        return False
+
+
 def contains_private_ipv4(text: str) -> bool:
     for candidate in re.findall(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])", text):
         try:
-            if ipaddress.ip_address(candidate).is_private:
+            if not ipaddress.ip_address(candidate).is_global:
                 return True
         except ValueError:
             continue
     return False
 
 
-def contains_private_path(value: object) -> bool:
-    if not isinstance(value, str):
-        return False
+def contains_private_value(value: str) -> bool:
     lowered = value.lower()
-    home_path = bool(re.search(r"^/(?:root|users)/", lowered))
+    home_path = bool(re.search(r"^/(?:root|users|home)/", lowered))
     return home_path or any(marker in lowered for marker in PRIVATE_MARKERS) or contains_private_ipv4(value)
+
+
+def walk_strings(value: object, path: str):
+    if isinstance(value, str):
+        yield path, value
+    elif isinstance(value, dict):
+        for key, child in value.items():
+            yield from walk_strings(child, f"{path}.{key}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from walk_strings(child, f"{path}[{index}]")
 
 
 def validate_source(source: object, index: int) -> list[str]:
@@ -82,8 +106,20 @@ def validate_source(source: object, index: int) -> list[str]:
     for field in sorted(REQUIRED_FIELDS - source.keys()):
         errors.append(f"{prefix}: missing required field: {field}")
 
+    for field in sorted(NONEMPTY_STRING_FIELDS):
+        if field in source and (not isinstance(source[field], str) or not source[field].strip()):
+            errors.append(f"{prefix}.{field}: must be a non-empty string")
+
+    published_at = source.get("published_at")
+    if isinstance(published_at, str) and published_at.strip() and not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}", published_at
+    ):
+        errors.append(f"{prefix}.published_at: must use YYYY-MM-DD format")
+
     if "url" in source and not is_http_url(source["url"]):
-        errors.append(f"{prefix}: url must be an HTTP or HTTPS URL")
+        errors.append(f"{prefix}.url: must be an HTTP or HTTPS URL")
+    elif url_uses_private_host(source.get("url")):
+        errors.append(f"{prefix}.url: private or local URL is not portable")
 
     speakers = source.get("speakers")
     if speakers is not None and (
@@ -91,38 +127,48 @@ def validate_source(source: object, index: int) -> list[str]:
         or not speakers
         or not all(isinstance(speaker, str) and speaker.strip() for speaker in speakers)
     ):
-        errors.append(f"{prefix}: speakers must be a non-empty list of names")
+        errors.append(f"{prefix}.speakers: must be a non-empty list of names")
 
     transcript = source.get("transcript")
     if not isinstance(transcript, dict):
         if "transcript" in source:
-            errors.append(f"{prefix}: transcript must be an object")
+            errors.append(f"{prefix}.transcript: must be an object")
         return errors
 
     status = transcript.get("status")
     if status not in TRANSCRIPT_STATUSES:
         errors.append(
-            f"{prefix}.transcript: status must be one of {sorted(TRANSCRIPT_STATUSES)}"
+            f"{prefix}.transcript.status: must be one of {sorted(TRANSCRIPT_STATUSES)}"
         )
 
     provenance = transcript.get("provenance")
     if provenance not in TRANSCRIPT_PROVENANCE:
         errors.append(
-            f"{prefix}.transcript: provenance must be one of {sorted(TRANSCRIPT_PROVENANCE)}"
+            f"{prefix}.transcript.provenance: must be one of {sorted(TRANSCRIPT_PROVENANCE)}"
         )
+
+    language = transcript.get("language")
+    if not isinstance(language, str) or not language.strip():
+        errors.append(f"{prefix}.transcript.language: must be a non-empty string")
 
     word_count = transcript.get("word_count")
     if not isinstance(word_count, int) or isinstance(word_count, bool) or word_count < 0:
-        errors.append(f"{prefix}.transcript: word_count must be a nonnegative integer")
+        errors.append(f"{prefix}.transcript.word_count: must be a nonnegative integer")
 
     if status == "available" and provenance == "unavailable":
-        errors.append(f"{prefix}.transcript: available transcript cannot use unavailable provenance")
+        errors.append(
+            f"{prefix}.transcript.provenance: available transcript cannot use unavailable provenance"
+        )
     if status == "unavailable" and provenance != "unavailable":
-        errors.append(f"{prefix}.transcript: unavailable transcript must use unavailable provenance")
+        errors.append(
+            f"{prefix}.transcript.provenance: unavailable transcript must use unavailable provenance"
+        )
 
-    for field, value in transcript.items():
-        if contains_private_path(value):
-            errors.append(f"{prefix}.transcript.{field}: private path or environment value is not portable")
+    for field_path, value in walk_strings(source, prefix):
+        if field_path.endswith(".url"):
+            continue
+        if contains_private_value(value):
+            errors.append(f"{field_path}: private path or environment value is not portable")
 
     return errors
 
@@ -148,8 +194,10 @@ def main(argv: list[str] | None = None) -> int:
         for index, source in enumerate(sources)
         for error in validate_source(source, index)
     ]
-    result = {"sources": len(sources), "errors": errors}
+    if not sources:
+        errors.append("source metadata array must contain at least one source")
 
+    result = {"sources": len(sources), "errors": errors}
     if args.json:
         print(json.dumps(result, indent=2))
     elif errors:
@@ -158,7 +206,6 @@ def main(argv: list[str] | None = None) -> int:
             print(f"- {error}")
     else:
         print(f"PASS: {len(sources)} sources, 0 errors")
-
     return 1 if errors else 0
 
 
