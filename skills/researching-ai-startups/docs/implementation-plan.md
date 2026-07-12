@@ -14,8 +14,8 @@
 
 | Path | Responsibility |
 |---|---|
-| `evals/researching-ai-startups/scenarios.md` | Stable RED/GREEN behavioral scenarios and expected failures |
-| `evals/researching-ai-startups/baseline.md` | Verbatim baseline observations from agents that do not receive the skill |
+| `skills/researching-ai-startups/evals/scenarios.md` | Stable RED/GREEN behavioral scenarios and expected failures |
+| `skills/researching-ai-startups/evals/baseline.md` | Verbatim baseline observations from agents that do not receive the skill |
 | `skills/researching-ai-startups/SKILL.md` | Small routing and execution contract for both research modes |
 | `skills/researching-ai-startups/references/company-selection.md` | How to discover, compare, and prioritize companies for deeper research |
 | `skills/researching-ai-startups/references/single-company-research.md` | Company overview, founders, product, business, culture, and careers workflow |
@@ -27,14 +27,14 @@
 | `skills/researching-ai-startups/templates/source-metadata.json` | Machine-readable source metadata example |
 | `skills/researching-ai-startups/templates/interview-note.md` | One-source-per-note research template |
 | `skills/researching-ai-startups/scripts/validate_sources.py` | Standard-library validation of metadata and private assumptions |
-| `tests/test_researching_ai_startups.py` | Package, content-contract, and validator regression tests |
+| `tests/test_researching_ai_startups.py` | Repository-level integration tests for the self-contained skill package |
 | `README.md` | Public discovery entry under Research & information |
 
 ## Task 1: Record Failing Behavioral Baselines
 
 **Files:**
-- Create: `evals/researching-ai-startups/scenarios.md`
-- Create: `evals/researching-ai-startups/baseline.md`
+- Create: `skills/researching-ai-startups/evals/scenarios.md`
+- Create: `skills/researching-ai-startups/evals/baseline.md`
 
 **Execution note:** Run agents without exposing the proposed skill or its design document. Baseline output must reflect natural behavior rather than expectations copied from the spec.
 
@@ -47,7 +47,7 @@
 
 - [ ] **Step 1: Write the scenario file before running any baseline**
 
-Create `evals/researching-ai-startups/scenarios.md` with this structure:
+Create `skills/researching-ai-startups/evals/scenarios.md` with this structure:
 
 ```markdown
 # Researching AI Startups Evaluation Scenarios
@@ -85,7 +85,7 @@ Expected result: at least one material failure across the dimensions. If both ag
 
 - [ ] **Step 3: Record baseline evidence verbatim**
 
-Create `evals/researching-ai-startups/baseline.md` with these exact sections:
+Create `skills/researching-ai-startups/evals/baseline.md` with these exact sections:
 
 ```markdown
 # Baseline Results Without the Skill
@@ -138,7 +138,7 @@ Under `Environment`, record the actual ISO date, model names, and `Skill availab
 Run:
 
 ```bash
-rg -n 'TBD|TODO|<actual|<verbatim|<quote|PASS/PARTIAL' evals/researching-ai-startups
+rg -n 'TBD|TODO|<actual|<verbatim|<quote|PASS/PARTIAL' skills/researching-ai-startups/evals
 ```
 
 Expected: no unresolved template markers in `baseline.md`. Template markers may remain only in fenced examples inside `scenarios.md`.
@@ -146,7 +146,7 @@ Expected: no unresolved template markers in `baseline.md`. Template markers may 
 - [ ] **Step 5: Commit the RED evidence**
 
 ```bash
-git add evals/researching-ai-startups
+git add skills/researching-ai-startups/evals
 git commit -m "test: record AI startup research baselines"
 ```
 
@@ -514,8 +514,8 @@ git commit -m "feat: add portable startup research templates"
 **Files:**
 - Create: `skills/researching-ai-startups/scripts/validate_sources.py`
 - Modify: `tests/test_researching_ai_startups.py`
-- Create: `tests/fixtures/researching_ai_startups/valid/sources.json`
-- Create: `tests/fixtures/researching_ai_startups/invalid/sources.json`
+- Create: `skills/researching-ai-startups/evals/fixtures/valid/sources.json`
+- Create: `skills/researching-ai-startups/evals/fixtures/invalid/sources.json`
 
 **Test scenarios:**
 
@@ -617,14 +617,14 @@ Expected: all tests pass.
 - [ ] **Step 6: Commit validator and fixtures**
 
 ```bash
-git add skills/researching-ai-startups/scripts tests/test_researching_ai_startups.py tests/fixtures/researching_ai_startups
+git add skills/researching-ai-startups/scripts tests/test_researching_ai_startups.py skills/researching-ai-startups/evals/fixtures
 git commit -m "feat: validate startup research sources"
 ```
 
 ## Task 6: Run GREEN Behavioral Evaluations and Refine the Skill
 
 **Files:**
-- Create: `evals/researching-ai-startups/with-skill.md`
+- Create: `skills/researching-ai-startups/evals/with-skill.md`
 - Modify only when an observed failure requires it: `skills/researching-ai-startups/SKILL.md`
 - Modify only when an observed failure requires it: `skills/researching-ai-startups/references/*.md`
 
@@ -648,7 +648,7 @@ Expected:
 
 - [ ] **Step 2: Record GREEN results**
 
-Create `evals/researching-ai-startups/with-skill.md` using the same scoring table as `baseline.md`. Include before/after differences tied to observed evidence.
+Create `skills/researching-ai-startups/evals/with-skill.md` using the same scoring table as `baseline.md`. Include before/after differences tied to observed evidence.
 
 - [ ] **Step 3: Refactor only observed gaps**
 
@@ -668,7 +668,7 @@ Expected: all tests pass; linter reports zero errors and zero warnings.
 - [ ] **Step 5: Commit behavioral evidence and refinements**
 
 ```bash
-git add evals/researching-ai-startups skills/researching-ai-startups
+git add skills/researching-ai-startups/evals skills/researching-ai-startups
 git commit -m "test: verify AI startup research behavior"
 ```
 
@@ -712,7 +712,7 @@ Run:
 /usr/bin/python3 -m pytest tests/ -q
 /usr/bin/python3 tools/skill_lint.py skills
 /usr/bin/python3 skills/researching-ai-startups/scripts/validate_sources.py \
-  tests/fixtures/researching_ai_startups/valid/sources.json --json
+  skills/researching-ai-startups/evals/fixtures/valid/sources.json --json
 git diff --check
 ```
 

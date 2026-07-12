@@ -269,6 +269,14 @@ Proposed public package:
 ```text
 skills/researching-ai-startups/
 ├── SKILL.md
+├── docs/
+│   ├── design.md
+│   └── implementation-plan.md
+├── evals/
+│   ├── scenarios.md
+│   ├── baseline.md
+│   ├── with-skill.md
+│   └── fixtures/
 ├── references/
 │   ├── company-selection.md
 │   ├── single-company-research.md
