@@ -18,7 +18,7 @@ Use plain, concrete language. Explain the user, problem, product, constraints, a
 | Category, market, theme, or list of companies | Company selection | `references/company-selection.md` |
 | One named company | Single-company research | `references/single-company-research.md` |
 
-Always apply `references/source-quality.md`. For interviews, podcasts, talks, YouTube videos, or transcripts, also apply `references/interview-notes.md`. Before writing files, apply `references/output-formats.md` and honor the project’s requested output location and format.
+Always apply `references/source-quality.md`. For interviews, podcasts, talks, YouTube videos, or transcripts, also apply `references/interview-notes.md`. Before writing files, apply `references/output-formats.md` and honor the project’s requested output location and format. If the user gives no destination, use a relative placeholder such as `<company>/`; never infer a private path from memory, profile context, or the current environment.
 
 ## Workflow
 

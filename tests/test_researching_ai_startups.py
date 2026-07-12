@@ -37,6 +37,7 @@ class ResearchingAIStartupsTests(unittest.TestCase):
             "Company selection",
             "Single-company research",
             "Do not decide whether the user should join",
+            "never infer a private path from memory, profile context, or the current environment",
         ]:
             self.assertIn(phrase, text)
         for jargon in ["Company dossier", "Technical wedge", "Artifact set"]:
