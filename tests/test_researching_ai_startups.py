@@ -247,6 +247,8 @@ class ResearchingAIStartupsTests(unittest.TestCase):
         cases = [
             ("available zero word count", {**base, "transcript": {**base["transcript"], "status": "available", "provenance": "official", "word_count": 0}}, "word_count"),
             ("unavailable word count", {**base, "transcript": {**base["transcript"], "word_count": 99}}, "word_count"),
+            ("nested list canonical url", {**base, "canonical_url": []}, "canonical_url"),
+            ("nested object media url", {**base, "media_url": {}}, "media_url"),
             ("nested null canonical url", {**base, "canonical_url": None}, "canonical_url"),
             ("nested null media url", {**base, "media_url": None}, "media_url"),
             ("nested null episode url", {**base, "episode_url": None}, "episode_url"),

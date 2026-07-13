@@ -108,14 +108,13 @@ def contains_private_value(value: str) -> bool:
 
 
 def walk_values(value: object, path: str):
+    yield path, value
     if isinstance(value, dict):
         for key, child in value.items():
             yield from walk_values(child, f"{path}.{key}")
     elif isinstance(value, list):
         for index, child in enumerate(value):
             yield from walk_values(child, f"{path}[{index}]")
-    else:
-        yield path, value
 
 
 def validate_source(source: object, index: int) -> list[str]:
