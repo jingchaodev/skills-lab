@@ -187,6 +187,56 @@ class ResearchingAIStartupsTests(unittest.TestCase):
         for field in ["id", "title", "publisher", "published_at", "media_type", "language"]:
             self.assertTrue(any(field in error for error in errors), field)
 
+    def test_validator_rejects_impossible_calendar_date(self):
+        payload = {
+            "id": "source",
+            "title": "Interview",
+            "speakers": ["Founder"],
+            "publisher": "Publisher",
+            "published_at": "2026-99-99",
+            "url": "https://example.com/interview",
+            "media_type": "video",
+            "transcript": {
+                "status": "unavailable",
+                "provenance": "unavailable",
+                "language": "en",
+                "word_count": 0,
+            },
+        }
+        result = self.run_payload(payload)
+        self.assertEqual(result.returncode, 1)
+        self.assertTrue(
+            any("published_at" in error and "calendar" in error for error in json.loads(result.stdout)["errors"])
+        )
+
+    def test_validator_rejects_status_url_and_canonical_url_inconsistencies(self):
+        base = {
+            "id": "source",
+            "title": "Interview",
+            "speakers": ["Founder"],
+            "publisher": "Publisher",
+            "published_at": "2026-01-15",
+            "url": "https://example.com/interview",
+            "media_type": "video",
+            "transcript": {
+                "status": "unavailable",
+                "provenance": "unavailable",
+                "language": "en",
+                "word_count": 0,
+            },
+        }
+        cases = [
+            ("unavailable word count", {**base, "transcript": {**base["transcript"], "word_count": 99}}, "word_count"),
+            ("nested private url", {**base, "related": {"url": "http://127.0.0.1/private"}}, "related.url"),
+            ("credential url", {**base, "url": "https://user:secret@example.com/x"}, "credentials"),
+            ("search result url", {**base, "url": "https://www.youtube.com/results?search_query=x"}, "search-results"),
+        ]
+        for name, payload, marker in cases:
+            with self.subTest(name=name):
+                result = self.run_payload(payload)
+                self.assertEqual(result.returncode, 1)
+                self.assertTrue(any(marker in error for error in json.loads(result.stdout)["errors"]))
+
     def test_validator_rejects_private_url_and_nested_private_value(self):
         payload = {
             "id": "source",

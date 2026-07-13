@@ -66,6 +66,6 @@ The Sierra research series was completed before `researching-ai-startups` existe
 - Preserve source metadata and transcript provenance in a portable format.
 - Separate attributed statements, independent evidence, and inference from the start.
 
-## Remaining behavioral baseline gap
+## Behavioral baseline coverage
 
-S2 did not receive a live no-skill web baseline because the original delegated runner failed. S1 and S3 now have complete same-prompt RED/GREEN web outputs, and S4 has a mode-routing evaluation. This limitation remains explicit rather than being replaced with synthetic output.
+S1, S2, and S3 now have complete same-prompt RED/GREEN live-web outputs under `evals/runs/`. The initial delegated-runner failures remain recorded because they explain the switch to independent one-shot agents; no missing output was synthesized.

@@ -26,7 +26,14 @@ Confirm:
 - canonical media URL or episode URL;
 - duration;
 - whether the source is company-hosted, independently hosted, or a promotional mirror;
-- transcript availability and provenance.
+- transcript status and provenance.
+
+Allowed transcript status values:
+
+- `available`
+- `unavailable`
+
+Every interview source record must include both an exact `status` value and an exact `provenance` value. If a transcript is visible on the publisher page but not saved locally, use `status: available`, record the correct provenance, and keep the research state as `Discovered`.
 
 Allowed transcript provenance values:
 

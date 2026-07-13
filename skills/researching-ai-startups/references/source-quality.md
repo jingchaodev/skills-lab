@@ -47,6 +47,12 @@ Record, when available:
 
 Do not turn relative dates such as “two years ago” into exact dates without confirming them.
 
+## Canonical-source and founder checks
+
+Search-result pages, snippets, AI summaries, and directory listings are discovery aids only. Never cite a search-results URL as canonical evidence. Open the underlying source and record its canonical URL before using it.
+
+For founder identity, reconcile the official leadership or about page with at least one primary record or reliable independent source. Preserve disagreements about the founder roster, current roles, or responsibility split instead of silently choosing one version.
+
 ## Claim handling
 
 For every important claim:

@@ -1,41 +1,56 @@
-# Decagon: Evidence-Checked Employer Research
+# Decagon: evidence-focused employer research
 
 ## What it concretely builds
 
-Decagon sells an enterprise platform for building and operating customer-service AI agents across chat, voice, email, and SMS. Its agents ingest company knowledge and conversation history, connect to business systems, and can execute actions such as refunds rather than merely retrieve answers. Customers also receive conversation analytics and operational controls. Decagon uses both first-party and third-party models. ([Decagon product](https://decagon.ai/); [TechCrunch, June 18, 2024](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/))
+Decagon sells an enterprise platform for deploying customer-service AI agents across chat, email, voice, and SMS. The agents ingest company knowledge and historical conversations, connect to business systems, and can execute actions such as refunds or message classification. Customers receive tooling for workflow definition, testing, monitoring, experimentation, analytics, and human oversight. Decagon says its natural-language “Agent Operating Procedures” replace more rigid configuration workflows. Sources: [product overview](https://decagon.ai/product/overview), [AOPs](https://decagon.ai/product/aop), [TechCrunch product description](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/).
 
-Its current product abstraction is “Agent Operating Procedures”: customers define workflows in natural language instead of a proprietary configuration language. The public site describes one platform for building, optimizing, evaluating, and deploying agents across channels, but does not expose enough implementation detail to determine how much orchestration, model serving, evaluation, or memory infrastructure is proprietary. ([Decagon product](https://decagon.ai/))
+The likely buyer is a customer-experience or support organization at an enterprise or high-growth company; Decagon described those as its primary customer segments in 2024. Public pricing was not found. Source: [TechCrunch](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/).
 
-This is not merely a thin support-widget hiring surface. A current infrastructure role says the team owns networking, data systems, ML serving, developer platforms, and real-time voice, with explicit p95/p99 latency and SLO responsibilities. Current openings also include agent orchestration, core/cloud/data infrastructure, developer experience, research, and voice roles. ([Core Infrastructure role](https://jobs.ashbyhq.com/decagon/7a22482c-e2d4-45b6-b364-89b63189a4ae); [careers page](https://decagon.ai/careers))
+For an AI-infrastructure candidate, the relevant hiring surface includes agent orchestration, agent systems, research, cloud/core/data infrastructure, developer experience, platform engineering, voice, security, testing, and customer-facing agent construction. Source: [current careers page](https://decagon.ai/careers).
 
 ## Verified founders
 
-- **Jesse Zhang, co-founder and CEO:** previously a Google software engineer and founder of social-gaming company Lowkey, which Niantic acquired in 2021. ([TechCrunch](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/); [No Priors interview](https://www.youtube.com/watch?v=emaSFP7y7Ko))
-- **Ashwin Sreenivas, co-founder:** previously a Palantir deployment strategist and co-founder of computer-vision startup Helia, acquired by Scale AI in 2020. The public sources reviewed identify him as co-founder but do not consistently establish his current formal title. ([TechCrunch](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/))
+- **Jesse Zhang, co-founder and CEO.** Decagon’s official page identifies him in that role; TechCrunch independently identifies him as a co-founder and reports previous work at Google and Citadel Securities, followed by founding Lowkey, which Niantic acquired in 2021. Sources: [Decagon](https://decagon.ai/about), [TechCrunch](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/).
+- **Ashwin Sreenivas, co-founder and president.** Decagon’s official page identifies him in that role; TechCrunch independently reports that he previously worked as a Palantir deployment strategist and co-founded Helia, acquired by Scale AI in 2020. Sources: [Decagon](https://decagon.ai/about), [TechCrunch](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/).
 
-Both founders had previously built and sold startups, but I found no reliable public evidence establishing when they met, whether they worked together before Decagon, or their present division of engineering, research, product, and sales responsibilities. ([TechCrunch](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/))
+Their current responsibility split beyond those titles remains publicly unclear.
 
-## Claim audit
+## Claims and evidence quality
 
-**Company claim — attributed, not independently validated:** Decagon’s homepage reports “70% chat and voice resolution” beside a named customer executive, while its job description calls Decagon the “leading” conversational-AI platform. These are company-controlled statements; no methodology, denominator, comparison set, or independent audit is supplied on those pages. ([Decagon product](https://decagon.ai/); [Core Infrastructure role](https://jobs.ashbyhq.com/decagon/7a22482c-e2d4-45b6-b364-89b63189a4ae))
+**Company claim — Attributed:** Decagon currently advertises “10M+ customers served,” an 80% deflection rate, a 65% reduction in support-operations costs, and a 93% agent-quality score. The page does not expose definitions, cohorts, measurement periods, or calculation methodology, so these should be treated as marketing claims rather than comparable performance evidence. Source: [Decagon about page](https://decagon.ai/about).
 
-**Independently supported business claim:** TechCrunch reported in June 2024 that Decagon had raised $35 million and named Eventbrite, Bilt, and Substack as clients. However, its statement that Decagon had reached break-even appears to derive from company information rather than audited financial disclosure. Thus the financing and customer relationships have independent reporting support; production depth, recurring revenue, and profitability remain unresolved. ([TechCrunch](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/))
+**Unresolved claim — Unverified:** Decagon says its platform supports prominent enterprises including Chime, Oura, Avis Budget Group, 1-800-FLOWERS.COM, and Hunter Douglas. TechCrunch separately reported Eventbrite, Bilt, and Substack as clients in 2024, but that article does not independently verify deployment scope, contract duration, production volume, or recurring revenue. Public evidence therefore supports customer relationships more strongly than it supports broad, durable production adoption. Sources: [Decagon](https://decagon.ai/about), [TechCrunch](https://techcrunch.com/2024/06/18/decagon-claims-its-customers-service-bots-are-smarter-than-average/).
 
-## Culture signal
+## Culture claim
 
-Decagon explicitly describes itself as **in-office**, organized around “excellence and velocity,” with values including “Just Get It Done,” “Winner’s Mindset,” customer invention, and polymathic breadth. The same role assigns engineers end-to-end ownership of production services. This supports a culture claim of high speed, broad ownership, and physical co-location—but it is employer-authored evidence, not proof of employees’ lived experience, sustainable workload, or how failures and dissent are handled. ([Core Infrastructure role](https://jobs.ashbyhq.com/decagon/7a22482c-e2d4-45b6-b364-89b63189a4ae))
+**Attributed, not independently validated:** Decagon explicitly prioritizes “decisive action and speed over prolonged deliberation and planning.” Its other stated values are customer-driven invention, a fiercely competitive “winner’s mindset,” and cross-functional generalism under the “Polymath Principle.” The page also says employees receive daily lunch and dinner, but it does not state working-hour expectations; interpreting meals as evidence of long hours would be speculation. Source: [Decagon careers](https://decagon.ai/careers).
+
+This is unusually explicit employer branding, but no sufficiently detailed independent employee account was found to establish whether daily operating behavior matches it.
 
 ## Two useful interviews
 
-1. **“No Priors Ep. 132 | With Decagon CEO and Co-Founder Jesse Zhang”** — approximately 31 minutes; independently hosted by No Priors. Useful for product differentiation, customer workflow integration, pricing, hiring philosophy, and Zhang’s application-layer thesis. **Canonical URL:** [YouTube](https://www.youtube.com/watch?v=emaSFP7y7Ko). **Transcript provenance:** platform captions appear to be the available transcript path, but I could not retrieve and validate the full caption body because YouTube presented an automated-traffic gate; treat substantive quotations as not yet transcript-verified.
+### 1. First Block with Jesse Zhang
 
-2. **“First Block: Interview with Jesse Zhang, Co-Founder and CEO of Decagon”** — approximately 23 minutes; hosted by Notion and useful for AOPs, enterprise trust, scaling, hiring, and operating tools. **Canonical URL:** [YouTube](https://www.youtube.com/watch?v=TnDemLcmOE8). **Transcript provenance:** publisher-linked transcript/resources are advertised in the video description via [Notion’s canonical companion link](https://ntn.so/2rl402); the transcript body was not independently retrieved, so provenance is **publisher-transcript, availability discovered but contents unverified**.
+- Publisher/host: Notion; speaker: Jesse Zhang; published November 19, 2025; approximately 23 minutes.
+- Canonical publisher URL: [Notion episode page](https://www.notion.com/blog/first-block-with-jesse-zhang)
+- Canonical media URL: [YouTube](https://www.youtube.com/watch?v=TnDemLcmOE8)
+- Why useful: covers AOPs, enterprise trust, scaling, hiring philosophy, and the transition from short-term deployment speed to longer-term product thinking. Source: [Notion](https://www.notion.com/blog/first-block-with-jesse-zhang).
+- `transcript status: available`
+- `transcript provenance: publisher-transcript`
+- Language: English; `word_count: 0` because the transcript was not extracted locally.
+- `research state: Discovered` — metadata and transcript availability were verified, but no complete source note was produced.
+
+### 2. No Priors Ep. 132 with Jesse Zhang
+
+- Publisher: No Priors; speaker: Jesse Zhang; approximately 31 minutes.
+- Canonical media URL: [YouTube](https://www.youtube.com/watch?v=emaSFP7y7Ko)
+- Why useful: its published chapter structure covers customer workflow integration, productivity, founder history, hiring philosophy, talent, differentiation, pricing, and long-term strategy. Source: [YouTube episode page](https://www.youtube.com/watch?v=emaSFP7y7Ko).
+- Exact publication date: not verified from the accessible canonical page.
+- `transcript status: unavailable`
+- `transcript provenance: unavailable`
+- Language: English; `word_count: 0` because the transcript is unavailable.
+- `research state: Discovered`
 
 ## Explicit unknowns
 
-- Audited ARR, profitability, retention, customer concentration, pricing, and production volume.
-- Resolution-rate methodology and performance versus human agents or competing platforms.
-- Model-provider dependence and the exact boundary between proprietary and purchased models.
-- Architecture for memory, evaluation, guardrails, tenant isolation, and human escalation.
-- Actual weekly hours, office-day requirement, attrition, incident culture, and treatment of failed projects.
-- Founder responsibility split and employee perspectives independent of recruiting material.
+Public evidence did not resolve pricing, revenue or ARR, customer concentration, retention, model-provider dependence, benchmark methodology, incident history, on-call expectations, actual working hours, employee attrition, equity terms, or how much core agent/evaluation infrastructure is built internally versus purchased. No employment verdict is issued.

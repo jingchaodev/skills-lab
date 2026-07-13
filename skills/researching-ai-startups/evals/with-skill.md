@@ -74,7 +74,7 @@ The same no-skill and with-skill prompts were run through independent agents wit
 
 ### S1 — Sierra result
 
-The skill-guided run used explicit `Direct`, `Attributed`, and `Unknown` labels. It treated customer metrics as vendor-published rather than audited, preserved the missing founder-responsibility split, and marked both interview transcripts `unavailable/undetermined` when platform captions could not be verified. It also separated job-listing signals from proof of architecture or future headcount.
+The skill-guided run used explicit `Direct`, `Attributed`, and `Unknown` labels. It treated customer metrics as vendor-published rather than audited, preserved the missing founder-responsibility split, and used `status: unavailable` with `provenance: unavailable` when platform captions could not be verified. It also separated job-listing signals from proof of architecture or future headcount.
 
 ### S3 — Decagon result
 
@@ -92,6 +92,16 @@ The skill-guided run separated the company’s resolution metric from independen
 | Unknowns | Present | Present and tied to next evidence needed |
 | Employment verdict | None | None |
 
-## Remaining limitation
+## S2 — Sparse public evidence
 
-S2 has an execution-design GREEN run and portability regression but no same-prompt live RED/GREEN web pair because the original delegated runner failed. The package does not claim otherwise.
+The same-prompt live RED/GREEN pair is preserved as `runs/s2-red.md` and `runs/s2-green.md`. The skill-guided run reconciled Fireworks’ official seven-person founding-team roster against a narrower investor profile and kept the discrepancy as an evidence gap. It used canonical episode/video URLs rather than search-results pages. Every interview records exact transcript `status`, exact `provenance`, and a separate research state.
+
+## Behavioral coverage
+
+All three required company types now have complete live RED/GREEN outputs:
+
+- S1: rich public evidence — Sierra;
+- S2: scattered public evidence — Fireworks AI;
+- S3: marketing-heavy and independently limited evidence — Decagon.
+
+S4 separately verifies company-selection routing. The original delegated-runner timeout remains documented, but it no longer leaves a required scenario uncovered.

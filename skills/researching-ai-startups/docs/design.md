@@ -1,7 +1,7 @@
 # Researching AI Startups Skill Design
 
 **Date:** 2026-07-12
-**Status:** Approved concept; implementation pending
+**Status:** Implemented and release-verified
 **Target repository:** a public portable Agent Skills repository
 **Proposed skill name:** `researching-ai-startups`
 
@@ -276,6 +276,7 @@ skills/researching-ai-startups/
 │   ├── scenarios.md
 │   ├── baseline.md
 │   ├── with-skill.md
+│   ├── runs/
 │   └── fixtures/
 ├── references/
 │   ├── company-selection.md
@@ -289,8 +290,7 @@ skills/researching-ai-startups/
 │   ├── source-metadata.json
 │   └── interview-note.md
 └── scripts/
-    ├── validate_sources.py
-    └── portability_check.py
+    └── validate_sources.py
 ```
 
 Scripts should be added only if baseline testing proves deterministic validation is useful. Any script must use the Python standard library, support `--help`, return a nonzero exit code on validation failure, and avoid private environment assumptions.

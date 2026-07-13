@@ -8,6 +8,7 @@ import ipaddress
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -70,6 +71,21 @@ def url_uses_private_host(value: object) -> bool:
         return False
 
 
+def validate_url(value: object, path: str) -> list[str]:
+    if not isinstance(value, str) or not is_http_url(value):
+        return [f"{path}: must be an HTTP or HTTPS URL"]
+    parsed = urlparse(value)
+    errors = []
+    if parsed.username is not None or parsed.password is not None:
+        errors.append(f"{path}: URL credentials are not allowed")
+    if url_uses_private_host(value):
+        errors.append(f"{path}: private or local URL is not portable")
+    host = (parsed.hostname or "").lower()
+    if host in {"youtube.com", "www.youtube.com"} and parsed.path.rstrip("/") == "/results":
+        errors.append(f"{path}: search-results URL is not canonical evidence")
+    return errors
+
+
 def contains_private_ipv4(text: str) -> bool:
     for candidate in re.findall(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])", text):
         try:
@@ -111,15 +127,17 @@ def validate_source(source: object, index: int) -> list[str]:
             errors.append(f"{prefix}.{field}: must be a non-empty string")
 
     published_at = source.get("published_at")
-    if isinstance(published_at, str) and published_at.strip() and not re.fullmatch(
-        r"\d{4}-\d{2}-\d{2}", published_at
-    ):
-        errors.append(f"{prefix}.published_at: must use YYYY-MM-DD format")
+    if isinstance(published_at, str) and published_at.strip():
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", published_at):
+            errors.append(f"{prefix}.published_at: must use YYYY-MM-DD format")
+        else:
+            try:
+                date.fromisoformat(published_at)
+            except ValueError:
+                errors.append(f"{prefix}.published_at: must be a valid calendar date")
 
-    if "url" in source and not is_http_url(source["url"]):
-        errors.append(f"{prefix}.url: must be an HTTP or HTTPS URL")
-    elif url_uses_private_host(source.get("url")):
-        errors.append(f"{prefix}.url: private or local URL is not portable")
+    if "url" in source:
+        errors.extend(validate_url(source["url"], f"{prefix}.url"))
 
     speakers = source.get("speakers")
     if speakers is not None and (
@@ -163,9 +181,15 @@ def validate_source(source: object, index: int) -> list[str]:
         errors.append(
             f"{prefix}.transcript.provenance: unavailable transcript must use unavailable provenance"
         )
+    if status == "unavailable" and isinstance(word_count, int) and word_count != 0:
+        errors.append(
+            f"{prefix}.transcript.word_count: unavailable transcript must have word_count 0"
+        )
 
     for field_path, value in walk_strings(source, prefix):
         if field_path.endswith(".url"):
+            if field_path != f"{prefix}.url":
+                errors.extend(validate_url(value, field_path))
             continue
         if contains_private_value(value):
             errors.append(f"{field_path}: private path or environment value is not portable")
