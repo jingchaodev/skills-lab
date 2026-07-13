@@ -1,8 +1,8 @@
 # Researching AI Startups Skill Design
 
 **Date:** 2026-07-12
-**Status:** Approved concept; implementation pending
-**Target repository:** `jingchaodev/skills-lab`
+**Status:** Implemented and release-verified
+**Target repository:** a public portable Agent Skills repository
 **Proposed skill name:** `researching-ai-startups`
 
 ## 1. Purpose
@@ -269,6 +269,15 @@ Proposed public package:
 ```text
 skills/researching-ai-startups/
 ├── SKILL.md
+├── docs/
+│   ├── design.md
+│   └── implementation-plan.md
+├── evals/
+│   ├── scenarios.md
+│   ├── baseline.md
+│   ├── with-skill.md
+│   ├── runs/
+│   └── fixtures/
 ├── references/
 │   ├── company-selection.md
 │   ├── single-company-research.md
@@ -281,8 +290,7 @@ skills/researching-ai-startups/
 │   ├── source-metadata.json
 │   └── interview-note.md
 └── scripts/
-    ├── validate_sources.py
-    └── portability_check.py
+    └── validate_sources.py
 ```
 
 Scripts should be added only if baseline testing proves deterministic validation is useful. Any script must use the Python standard library, support `--help`, return a nonzero exit code on validation failure, and avoid private environment assumptions.
@@ -333,7 +341,7 @@ Before publication:
 
 1. scan for private names, internal repositories, local paths, private IPs, chat IDs, tokens, credentials, and project-specific note systems;
 2. replace local paths with placeholders such as `<workspace>` and `<output-dir>`;
-3. ensure examples work without MemoryKit, Tailscale, Telegram, or a specific HTML renderer;
+3. ensure examples work without any private note system, private network, messaging platform, or specific HTML renderer;
 4. avoid publishing copyrighted transcript content;
 5. run the repository’s skill lint and tests;
 6. test installation through the documented `skills/` symlink flow;

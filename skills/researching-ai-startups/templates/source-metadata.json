@@ -1,0 +1,30 @@
+{
+  "id": "publisher-2026-founder-interview",
+  "title": "Example Founder Interview",
+  "speakers": [
+    "Founder Name"
+  ],
+  "publisher": "Publisher Name",
+  "published_at": "2026-01-15",
+  "accessed_at": "2026-07-12",
+  "url": "https://example.com/interview",
+  "media_type": "video",
+  "duration_seconds": 3600,
+  "topics": [
+    "product",
+    "culture"
+  ],
+  "evidence_types": [
+    "Attributed"
+  ],
+  "transcript": {
+    "status": "available",
+    "provenance": "platform-captions",
+    "language": "en",
+    "word_count": 8400,
+    "local_path": "sources/transcripts/publisher-2026-founder-interview.txt"
+  },
+  "notes": [
+    "interviews/publisher-2026-founder-interview.md"
+  ]
+}
