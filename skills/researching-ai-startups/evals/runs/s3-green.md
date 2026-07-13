@@ -37,7 +37,7 @@ This is unusually explicit employer branding, but no sufficiently detailed indep
 - Why useful: covers AOPs, enterprise trust, scaling, hiring philosophy, and the transition from short-term deployment speed to longer-term product thinking. Source: [Notion](https://www.notion.com/blog/first-block-with-jesse-zhang).
 - `transcript status: available`
 - `transcript provenance: publisher-transcript`
-- Language: English; `word_count: 0` because the transcript was not extracted locally.
+- Language: English; `word_count: null` because the available transcript was not extracted or counted.
 - `research state: Discovered` — metadata and transcript availability were verified, but no complete source note was produced.
 
 ### 2. No Priors Ep. 132 with Jesse Zhang

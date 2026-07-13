@@ -44,7 +44,7 @@ Allowed transcript provenance values:
 - `generated`
 - `unavailable`
 
-Record language, word count, and important caption or speech-recognition limitations.
+Record language, word count, and important caption or speech-recognition limitations. Use an integer when counted. Use `null` only when `status: available` but the transcript has not been extracted or counted. Use `0` when `status: unavailable`.
 
 ## Default media policy
 

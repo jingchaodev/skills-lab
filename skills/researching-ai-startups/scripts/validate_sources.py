@@ -170,8 +170,13 @@ def validate_source(source: object, index: int) -> list[str]:
         errors.append(f"{prefix}.transcript.language: must be a non-empty string")
 
     word_count = transcript.get("word_count")
-    if not isinstance(word_count, int) or isinstance(word_count, bool) or word_count < 0:
-        errors.append(f"{prefix}.transcript.word_count: must be a nonnegative integer")
+    if word_count is None:
+        if status != "available":
+            errors.append(
+                f"{prefix}.transcript.word_count: null is allowed only when an available transcript has not been counted"
+            )
+    elif not isinstance(word_count, int) or isinstance(word_count, bool) or word_count < 0:
+        errors.append(f"{prefix}.transcript.word_count: must be null or a nonnegative integer")
 
     if status == "available" and provenance == "unavailable":
         errors.append(
@@ -187,7 +192,9 @@ def validate_source(source: object, index: int) -> list[str]:
         )
 
     for field_path, value in walk_strings(source, prefix):
-        if field_path.endswith(".url"):
+        field_name = field_path.rsplit(".", 1)[-1]
+        is_url_field = field_name == "url" or field_name.endswith("_url")
+        if is_url_field:
             if field_path != f"{prefix}.url":
                 errors.extend(validate_url(value, field_path))
             continue

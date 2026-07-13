@@ -187,6 +187,25 @@ class ResearchingAIStartupsTests(unittest.TestCase):
         for field in ["id", "title", "publisher", "published_at", "media_type", "language"]:
             self.assertTrue(any(field in error for error in errors), field)
 
+    def test_validator_accepts_available_transcript_with_unknown_word_count(self):
+        payload = {
+            "id": "source",
+            "title": "Interview",
+            "speakers": ["Founder"],
+            "publisher": "Publisher",
+            "published_at": "2026-01-15",
+            "url": "https://example.com/interview",
+            "media_type": "video",
+            "transcript": {
+                "status": "available",
+                "provenance": "publisher-transcript",
+                "language": "en",
+                "word_count": None,
+            },
+        }
+        result = self.run_payload(payload)
+        self.assertEqual(result.returncode, 0, result.stdout)
+
     def test_validator_rejects_impossible_calendar_date(self):
         payload = {
             "id": "source",
@@ -227,9 +246,11 @@ class ResearchingAIStartupsTests(unittest.TestCase):
         }
         cases = [
             ("unavailable word count", {**base, "transcript": {**base["transcript"], "word_count": 99}}, "word_count"),
-            ("nested private url", {**base, "related": {"url": "http://127.0.0.1/private"}}, "related.url"),
+            ("nested private url", {**base, "related": {"media_url": "http://127.0.0.1/private"}}, "related.media_url"),
             ("credential url", {**base, "url": "https://user:secret@example.com/x"}, "credentials"),
+            ("nested credential url", {**base, "media_url": "https://user:secret@example.com/x"}, "credentials"),
             ("search result url", {**base, "url": "https://www.youtube.com/results?search_query=x"}, "search-results"),
+            ("nested search result url", {**base, "episode_url": "https://www.youtube.com/results?search_query=x"}, "search-results"),
         ]
         for name, payload, marker in cases:
             with self.subTest(name=name):
