@@ -81,7 +81,12 @@ def validate_url(value: object, path: str) -> list[str]:
     if url_uses_private_host(value):
         errors.append(f"{path}: private or local URL is not portable")
     host = (parsed.hostname or "").lower()
-    if host in {"youtube.com", "www.youtube.com"} and parsed.path.rstrip("/") == "/results":
+    url_path = parsed.path.rstrip("/") or "/"
+    is_youtube_search = host in {"youtube.com", "www.youtube.com", "youtu.be"} and url_path == "/results"
+    is_google_search = (host == "google.com" or host.endswith(".google.com")) and url_path == "/search"
+    is_bing_search = (host == "bing.com" or host.endswith(".bing.com")) and url_path == "/search"
+    is_duckduckgo_search = host in {"duckduckgo.com", "www.duckduckgo.com"} and url_path == "/" and bool(parsed.query)
+    if is_youtube_search or is_google_search or is_bing_search or is_duckduckgo_search:
         errors.append(f"{path}: search-results URL is not canonical evidence")
     return errors
 
@@ -177,6 +182,10 @@ def validate_source(source: object, index: int) -> list[str]:
             )
     elif not isinstance(word_count, int) or isinstance(word_count, bool) or word_count < 0:
         errors.append(f"{prefix}.transcript.word_count: must be null or a nonnegative integer")
+    elif status == "available" and word_count == 0:
+        errors.append(
+            f"{prefix}.transcript.word_count: available transcript must use null when uncounted or a positive integer when counted"
+        )
 
     if status == "available" and provenance == "unavailable":
         errors.append(

@@ -245,11 +245,16 @@ class ResearchingAIStartupsTests(unittest.TestCase):
             },
         }
         cases = [
+            ("available zero word count", {**base, "transcript": {**base["transcript"], "status": "available", "provenance": "official", "word_count": 0}}, "word_count"),
             ("unavailable word count", {**base, "transcript": {**base["transcript"], "word_count": 99}}, "word_count"),
             ("nested private url", {**base, "related": {"media_url": "http://127.0.0.1/private"}}, "related.media_url"),
             ("credential url", {**base, "url": "https://user:secret@example.com/x"}, "credentials"),
             ("nested credential url", {**base, "media_url": "https://user:secret@example.com/x"}, "credentials"),
             ("search result url", {**base, "url": "https://www.youtube.com/results?search_query=x"}, "search-results"),
+            ("short YouTube search result", {**base, "url": "https://youtu.be/results?search_query=x"}, "search-results"),
+            ("Google search result", {**base, "url": "https://www.google.com/search?q=x"}, "search-results"),
+            ("Bing search result", {**base, "url": "https://www.bing.com/search?q=x"}, "search-results"),
+            ("DuckDuckGo search result", {**base, "url": "https://duckduckgo.com/?q=x"}, "search-results"),
             ("nested search result url", {**base, "episode_url": "https://www.youtube.com/results?search_query=x"}, "search-results"),
         ]
         for name, payload, marker in cases:
