@@ -107,15 +107,15 @@ def contains_private_value(value: str) -> bool:
     return home_path or any(marker in lowered for marker in PRIVATE_MARKERS) or contains_private_ipv4(value)
 
 
-def walk_strings(value: object, path: str):
-    if isinstance(value, str):
-        yield path, value
-    elif isinstance(value, dict):
+def walk_values(value: object, path: str):
+    if isinstance(value, dict):
         for key, child in value.items():
-            yield from walk_strings(child, f"{path}.{key}")
+            yield from walk_values(child, f"{path}.{key}")
     elif isinstance(value, list):
         for index, child in enumerate(value):
-            yield from walk_strings(child, f"{path}[{index}]")
+            yield from walk_values(child, f"{path}[{index}]")
+    else:
+        yield path, value
 
 
 def validate_source(source: object, index: int) -> list[str]:
@@ -200,14 +200,14 @@ def validate_source(source: object, index: int) -> list[str]:
             f"{prefix}.transcript.word_count: unavailable transcript must have word_count 0"
         )
 
-    for field_path, value in walk_strings(source, prefix):
+    for field_path, value in walk_values(source, prefix):
         field_name = field_path.rsplit(".", 1)[-1]
         is_url_field = field_name == "url" or field_name.endswith("_url")
         if is_url_field:
             if field_path != f"{prefix}.url":
                 errors.extend(validate_url(value, field_path))
             continue
-        if contains_private_value(value):
+        if isinstance(value, str) and contains_private_value(value):
             errors.append(f"{field_path}: private path or environment value is not portable")
 
     return errors
